@@ -25,6 +25,7 @@ src/static_root/
 
 # SQLite3 database
 *.sqlite
+*.sqlite3
 
 # Coverage 
 coverage/
