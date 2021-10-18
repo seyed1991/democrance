@@ -1,0 +1,39 @@
+# IDEs
+.project
+.pydevproject
+.idea
+.vscode
+.settings
+.env
+
+assets/frontend
+static/frontend
+media/
+
+# Random files
+*~
+\#*
+
+virtualenv/
+venv/
+htmlcov/
+src/static_dist/
+src/static_root/
+
+# Python compiled byte code
+*.pyc
+
+# SQLite3 database
+*.sqlite
+
+# Coverage 
+coverage/
+.coverage
+.cache
+
+# static validation files
+.eslintrc
+.sass-lint.yml
+.prospector.yml
+.coveragerc
+
