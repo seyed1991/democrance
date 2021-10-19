@@ -1,3 +1,4 @@
+import random
 import unicodedata
 
 from django.db import models
@@ -36,7 +37,8 @@ class UserManager(BaseUserManager):
 
     @classmethod
     def normalize_username(cls, username):
-        return unicodedata.normalize('NFKC', username) if isinstance(username, str) else username
+        username = unicodedata.normalize('NFKC', username) if isinstance(username, str) else username
+        return username.lower().replace(' ', '_')  # TODO: can be improved to match username validator regex
 
 
 class User(AbstractBaseUser):
@@ -71,3 +73,33 @@ class User(AbstractBaseUser):
     def is_staff(self):
         """Admin panel access"""
         return self.is_admin
+
+    @classmethod
+    def generate_username(cls, data):
+        """
+        Since we don't have username field when creating customers, and customers need to be able to be authenticated to
+         create `Quote` for policies, this method is used to generate username for customers.
+        :param data:
+        :return generated username:
+        """
+        username = data.get('username')
+        if not username:
+            username = UserManager.normalize_username(f'{data["last_name"]}_{data["first_name"]}')
+        while cls.objects.filter(username=username).exists():
+            username = f'{username}_{random.randint(100, 999)}'
+        return username
+
+    @classmethod
+    def generate_password(cls, data):
+        """
+        Since we don't have password field when creating customers, and customers need to be able to be authenticated to
+        create `Quote` for policies, this method is used to generate password for customers. The generated password is
+        based on `date_of_birth` for simplicity, but in production in can be improved.
+        :param data:
+        :return generated password:
+        """
+        password = data.get('password')
+        if not password:
+            password = data["date_of_birth"].strftime('%Y%m%d')  # simple generated password for test purpose
+        return password
+

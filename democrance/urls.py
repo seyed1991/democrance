@@ -15,8 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+import users.views as users_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),  # basic django rest framework login/logout views
+    path('list_customers/', users_views.CustomerList.as_view()),
+    path('create_customer/', users_views.CustomerCreation.as_view()),
 ]
