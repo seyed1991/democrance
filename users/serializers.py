@@ -11,7 +11,7 @@ class UserListSerializer(serializers.ModelSerializer):
 class UserCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id, ''username', 'first_name', 'last_name', 'date_of_birth']
+        fields = ['id', 'username', 'first_name', 'last_name', 'date_of_birth']
         read_only_fields = ['id', 'username']
 
     def create(self, validated_data):
