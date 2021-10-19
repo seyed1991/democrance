@@ -43,9 +43,9 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser):
     username = models.CharField(_('username'), max_length=150, unique=True, validators=[UnicodeUsernameValidator()])
-    first_name = models.CharField(_('first name'), max_length=150)
-    last_name = models.CharField(_('last name'), max_length=150)
-    date_of_birth = models.DateField()
+    first_name = models.CharField(_('first name'), max_length=150, db_index=True)
+    last_name = models.CharField(_('last name'), max_length=150, db_index=True)
+    date_of_birth = models.DateField(db_index=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False, verbose_name=_('is admin user'))
 
