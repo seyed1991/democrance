@@ -19,3 +19,6 @@ class Policy(models.Model):
     state = models.IntegerField(choices=StateChoices.choices, verbose_name=_('Policy State'), db_index=True)
     customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name='policies',
                                  db_index=True)
+
+    class Meta:
+        verbose_name_plural = 'Policies'
