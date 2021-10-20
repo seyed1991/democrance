@@ -1,4 +1,4 @@
-from insurance.models import Policy
+from insurance.models import Policy, PolicyHistory
 from rest_framework import serializers
 
 
@@ -8,4 +8,13 @@ class PolicySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Policy
+        fields = '__all__'
+
+
+class PolicyHistorySerializer(serializers.ModelSerializer):
+    action = serializers.CharField(source='get_action_display')
+    policy = serializers.StringRelatedField()
+
+    class Meta:
+        model = PolicyHistory
         fields = '__all__'

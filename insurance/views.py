@@ -1,7 +1,7 @@
 from rest_framework import response, views
 from django.http import Http404
 from insurance.models import Policy
-from insurance.serializers import PolicySerializer
+from insurance.serializers import PolicySerializer, PolicyHistorySerializer
 from users.models import User
 
 
@@ -83,4 +83,17 @@ class PolicyDetail(views.APIView):
         if not policy:
             raise Http404
         serializer = PolicySerializer(policy)
+        return response.Response(serializer.data)
+
+
+class PolicyHistory(views.APIView):
+    """
+    View to list policy's history.
+    """
+
+    def get(self, request, policy_id):
+        policy = Policy.objects.filter(id=policy_id).first()
+        if not policy:
+            raise Http404
+        serializer = PolicyHistorySerializer(policy.history, many=True)
         return response.Response(serializer.data)

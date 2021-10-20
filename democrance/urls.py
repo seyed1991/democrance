@@ -26,4 +26,5 @@ urlpatterns = [
     path('api/v1/quote/', insurance_views.QuoteList.as_view()),
     path('api/v1/policies/', insurance_views.PolicyList.as_view()),
     path('api/v1/policies/<int:policy_id>/', insurance_views.PolicyDetail.as_view()),
+    path('api/v1/policies/<int:policy_id>/history/', insurance_views.PolicyHistory.as_view()),
 ]
