@@ -71,3 +71,16 @@ class PolicyList(views.APIView):
         )
         serializer = PolicySerializer(policies, many=True)
         return response.Response(serializer.data)
+
+
+class PolicyDetail(views.APIView):
+    """
+    View to list customer's policies.
+    """
+
+    def get(self, request, policy_id):
+        policy = Policy.objects.filter(id=policy_id, state=Policy.StateChoices.active).first()
+        if not policy:
+            raise Http404
+        serializer = PolicySerializer(policy)
+        return response.Response(serializer.data)
