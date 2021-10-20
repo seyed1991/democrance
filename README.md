@@ -59,3 +59,5 @@ performance in name search
 - We can have a `Quote Schema` model to have pre-filled Quotes with details, so that users
 can search and choose from them. This table can be filled with `Fixtures`.
 - `Payment` process is not implemented.
+- using `_` in urls and ending them with `/` is not recommended, but was used for task
+fulfillment
