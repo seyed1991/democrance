@@ -33,12 +33,10 @@ class QuoteList(views.APIView):
                 raise Http404
             if quote.state == Policy.StateChoices.new and data.get('status') == 'accepted':
                 # quote accepted by customer
-                # TODO: authenticate customer and policy ownership
                 quote.state = Policy.StateChoices.accepted
                 quote.save()
             elif quote.state == Policy.StateChoices.accepted and data.get('status') == 'active':
                 # quote paid by customer and become policy
-                # TODO: authenticate customer and policy ownership
                 # TODO: payment simulation
                 quote.state = Policy.StateChoices.active
                 quote.save()
