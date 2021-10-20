@@ -16,6 +16,9 @@ class QuoteList(views.APIView):
         """
         customer_id = request.GET.get('customer_id', request.user.id)
         quotes = Policy.objects.filter(customer_id=customer_id).exclude(state=Policy.StateChoices.active)
+        policy_type = request.query_params.get('type')
+        if policy_type:
+            quotes = quotes.filter(policy_type=Policy.get_choice_by_name(Policy.PolicyTypes, policy_type))
         serializer = PolicySerializer(quotes, many=True)
         return response.Response(serializer.data)
 
@@ -69,6 +72,9 @@ class PolicyList(views.APIView):
             state=Policy.StateChoices.active,
             customer_id=customer_id
         )
+        policy_type = request.query_params.get('type')
+        if policy_type:
+            policies = policies.filter(policy_type=Policy.get_choice_by_name(Policy.PolicyTypes, policy_type))
         serializer = PolicySerializer(policies, many=True)
         return response.Response(serializer.data)
 
