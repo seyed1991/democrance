@@ -44,6 +44,11 @@ class PolicyHistory(models.Model):
     action = models.IntegerField(choices=ActionTypes.choices)
     action_datetime = models.DateTimeField(auto_now=True)
 
+    @property
+    def customer(self):
+        # this is used for owner permission mixin
+        return self.policy.customer
+
 
 @receiver(models.signals.post_save, sender=Policy, dispatch_uid="add_policy_action_history")
 def save_policy_history_handler(sender, instance, created, **kwargs):
