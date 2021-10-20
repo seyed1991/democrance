@@ -5,12 +5,24 @@ from insurance.serializers import PolicySerializer
 from users.models import User
 
 
-class ListQuotes(views.APIView):
+class QuoteList(views.APIView):
     """
-    View to perform Quote Creation and Manipulations.
+    View to create,edit and list quotes.
     """
 
+    def get(self, request):
+        """
+        View to list customer quotes.
+        """
+        customer_id = request.GET.get('customer_id', request.user.id)
+        quotes = Policy.objects.filter(customer_id=customer_id).exclude(state=Policy.StateChoices.active)
+        serializer = PolicySerializer(quotes, many=True)
+        return response.Response(serializer.data)
+
     def post(self, request):
+        """
+        View to perform Quote Creation and Manipulations.
+        """
         data = request.data
         if data.get('quote_id'):
             quote = Policy.objects.filter(id=data['quote_id']).first()

@@ -23,5 +23,5 @@ urlpatterns = [
     path('api/auth/', include('rest_framework.urls')),  # basic django rest framework login/logout views
     path('api/v1/list_customers/', users_views.CustomerList.as_view()),
     path('api/v1/create_customer/', users_views.CustomerCreation.as_view()),
-    path('api/v1/quote/', insurance_views.ListQuotes.as_view()),
+    path('api/v1/quote/', insurance_views.QuoteList.as_view()),
 ]
