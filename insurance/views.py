@@ -56,3 +56,18 @@ class QuoteList(views.APIView):
             quote.save()
         serializer = PolicySerializer(quote)
         return response.Response(serializer.data)
+
+
+class PolicyList(views.APIView):
+    """
+    View to list customer's policies.
+    """
+
+    def get(self, request):
+        customer_id = request.GET.get('customer_id', request.user.id)
+        policies = Policy.objects.filter(
+            state=Policy.StateChoices.active,
+            customer_id=customer_id
+        )
+        serializer = PolicySerializer(policies, many=True)
+        return response.Response(serializer.data)
