@@ -1,8 +1,10 @@
-from rest_framework import response, views
+from rest_framework import response, views, permissions
+from rest_framework.decorators import permission_classes
 from django.http import Http404
 from insurance.models import Policy
 from insurance.serializers import PolicySerializer, PolicyHistorySerializer
 from users.models import User
+from users.permissions import IsAdminOrOwnerPermission
 
 
 class QuoteList(views.APIView):
@@ -10,6 +12,7 @@ class QuoteList(views.APIView):
     View to create,edit and list quotes.
     """
 
+    # @permission_classes([IsAdminOrOwnerPermission])
     def get(self, request):
         """
         View to list customer quotes.
@@ -22,6 +25,7 @@ class QuoteList(views.APIView):
         serializer = PolicySerializer(quotes, many=True)
         return response.Response(serializer.data)
 
+    # @permission_classes([permissions.IsAuthenticated])
     def post(self, request):
         """
         View to perform Quote Creation and Manipulations.
@@ -64,6 +68,7 @@ class PolicyList(views.APIView):
     View to list customer's policies.
     """
 
+    # @permission_classes([IsAdminOrOwnerPermission])
     def get(self, request):
         customer_id = request.GET.get('customer_id', request.user.id)
         policies = Policy.objects.filter(
@@ -82,6 +87,7 @@ class PolicyDetail(views.APIView):
     View to list customer's policies.
     """
 
+    # @permission_classes([IsAdminOrOwnerPermission])
     def get(self, request, policy_id):
         policy = Policy.objects.filter(id=policy_id, state=Policy.StateChoices.active).first()
         if not policy:
@@ -95,6 +101,7 @@ class PolicyHistory(views.APIView):
     View to list policy's history.
     """
 
+    # @permission_classes([IsAdminOrOwnerPermission])
     def get(self, request, policy_id):
         policy = Policy.objects.filter(id=policy_id).first()
         if not policy:

@@ -11,7 +11,7 @@ class CustomerList(generics.ListAPIView):
     :returns list of customers to the admin user
     """
     serializer_class = serializers.UserListSerializer
-    permission_classes = [permissions.IsAdminUser]
+    # permission_classes = [permissions.IsAdminUser]
 
     def get_queryset(self):
         queryset = models.User.objects.annotate(full_name=Concat('first_name', Value(' '), 'last_name')).all()
@@ -30,4 +30,4 @@ class CustomerCreation(generics.CreateAPIView):
     """
     queryset = models.User.objects.all()
     serializer_class = serializers.UserCreateSerializer
-    permission_classes = [permissions.IsAdminUser]
+    # permission_classes = [permissions.IsAdminUser]

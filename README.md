@@ -49,7 +49,9 @@ python manage.py test
 ---
 #### Notes:
 
-- `IsOwnerPermission` is implemented, but was not used for easier test
+- `IsOwnerPermission` and `IsAdminUser` is implemented, but was commented for easier test.
+They can be uncommented in `views` files, but then basic authentication is needed in api
+requests.
 - More tests can be added e.g. `Authenticaion Tests`, `Access Control`, `Filters`
 - For more complicated filters `django-filter` can be used
 - If `Castomer` has more data a `Castomer` model can be added to save customers profiles
