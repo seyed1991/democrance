@@ -1,0 +1,16 @@
+[
+  {
+    "model": "users.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$260000$FmuiwJvjmTFs4HXQXmxkj3$I80tAbHUb6ZgCYXdjuvs3Rh585TyCHIgt02uCkzH5sk=",
+      "last_login": "2021-10-19T14:54:42.666Z",
+      "username": "admin",
+      "first_name": "Seyed Mohammad",
+      "last_name": "Hosseini",
+      "date_of_birth": "1991-10-23",
+      "is_active": true,
+      "is_admin": true
+    }
+  }
+]
