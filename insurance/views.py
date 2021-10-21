@@ -18,7 +18,7 @@ class QuoteList(views.APIView):
         quotes = Policy.objects.filter(customer_id=customer_id).exclude(state=Policy.StateChoices.active)
         policy_type = request.query_params.get('type')
         if policy_type:
-            quotes = quotes.filter(policy_type=Policy.get_choice_by_name(Policy.PolicyTypes, policy_type))
+            quotes = quotes.filter(policy_type=Policy.get_choice_by_label(Policy.PolicyTypes, policy_type))
         serializer = PolicySerializer(quotes, many=True)
         return response.Response(serializer.data)
 
@@ -45,7 +45,7 @@ class QuoteList(views.APIView):
             customer = User.objects.filter(id=data.get('customer_id')).first()
             if not customer:
                 raise Http404
-            policy_type = Policy.get_choice_by_name(Policy.PolicyTypes, data.get('type'))
+            policy_type = Policy.get_choice_by_label(Policy.PolicyTypes, data.get('type'))
             if not policy_type:
                 raise Http404
             quote = Policy(
@@ -72,7 +72,7 @@ class PolicyList(views.APIView):
         )
         policy_type = request.query_params.get('type')
         if policy_type:
-            policies = policies.filter(policy_type=Policy.get_choice_by_name(Policy.PolicyTypes, policy_type))
+            policies = policies.filter(policy_type=Policy.get_choice_by_label(Policy.PolicyTypes, policy_type))
         serializer = PolicySerializer(policies, many=True)
         return response.Response(serializer.data)
 

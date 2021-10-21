@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 
 class Policy(models.Model):
     class PolicyTypes(models.IntegerChoices):
-        personal_accident = 1
+        personal_accident = 1, 'personal-accident'
         earthquake = 2
 
     class StateChoices(models.IntegerChoices):
@@ -29,8 +29,8 @@ class Policy(models.Model):
         return f'{self.customer} - {self.get_policy_type_display()}'
 
     @classmethod
-    def get_choice_by_name(cls, choices, name):
-        return next((item for item in choices if item.name == name), None)
+    def get_choice_by_label(cls, choices, label):
+        return next((item for item in choices if item.label == label), None)
 
 
 class PolicyHistory(models.Model):
